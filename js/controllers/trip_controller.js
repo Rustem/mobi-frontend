@@ -22,4 +22,15 @@ MobiliuzTrips.TripController = Ember.ObjectController.extend({
             return this.get('from_dt') + ' - ' + this.get('to_dt');
         }
     }.property('from_dt', 'to_dt'),
+
+    numOfViolations: function(key, value) {
+        if(value === undefined) {
+            return this.get('model').get('violations').length;
+        }
+    }.property('model.violations'),
+    actions: {
+        // detail: function() {
+        //     this.
+        // }
+    }
 })

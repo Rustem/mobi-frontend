@@ -1,6 +1,9 @@
 MobiliuzTrips.Router.map(function() {
     this.resource('trips', {path: '/'}, function(){
-        this.route('by_date', {path: '/:date'})
+        this.route('by_date', {path: '/:date'}),
+        this.resource('trip', {path: '/:date/:trip_id'}, function() {
+            this.route('violations', {path: '/:date/:trip_id/violations'})
+        });
     });
 });
 

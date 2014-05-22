@@ -60,7 +60,10 @@
 <ul class="block-list js-route-list">
   {{#each itemController='trip'}}
     {{#view view.routeItemView}}
-    <a href="#" class="selectable-list-item js-list-focus" data-dismiss="dropdown">{{from_dt}}-{{to_dt}} <sup><small>{{ violations }}</small></sup></a>
+    <a href="#" class="selectable-list-item js-list-focus" data-dismiss="dropdown">{{from_dt}}-{{to_dt}} <sup><small>{{ violations.length }}</small></sup></a>
+    {{#each viol in violations}}
+    <p>{{viol.title}}</p>
+    {{/each}}
     {{/view}}
   {{/each}}
 </ul>
