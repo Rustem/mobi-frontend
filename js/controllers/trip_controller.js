@@ -25,9 +25,10 @@ MobiliuzTrips.TripController = Ember.ObjectController.extend({
 
     numOfViolations: function(key, value) {
         if(value === undefined) {
-            return this.get('model').get('violations').length;
+            return this.get('model.violations.length');
         }
-    }.property('model.violations'),
+    }.property('model.violations.length'),
+
     actions: {
         // detail: function() {
         //     this.

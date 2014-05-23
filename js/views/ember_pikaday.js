@@ -10,8 +10,7 @@ MobiliuzTrips.DatePicker = Ember.TextField.extend({
       if (picker){
         picker.setDate(this.get("value"));
       }
-      Ember.Instrumentation.instrument(GLB_EVTS.get('DATE_CHANGED'),
-                                       this.get('value'));
+      this.get('_parentView.controller').send('dateChanged', this.get('value'));
     }.observes("value"),
 
     didInsertElement: function(){
@@ -66,7 +65,7 @@ MobiliuzTrips.TripPickerBodyView = Ember.View.extend({
                   .parents('ul')
                   .find('.li--focus').removeClass('li--focus');
                 $(self).addClass('li--focus');
-            }
+            },
         })
     })
 });

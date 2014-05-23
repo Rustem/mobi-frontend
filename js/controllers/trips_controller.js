@@ -1,3 +1,3 @@
-MobiliuzTrips.TripsController = Ember.ArrayController.extend({
+MobiliuzTrips.TripsByDateIndexController = Ember.ArrayController.extend({
     //itemController: 'trip',
 });

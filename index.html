@@ -44,6 +44,7 @@
 </figure>
 {{outlet}}
 </script>
+
 <script type="text/x-handlebars" data-template-name="trippicker-header">
   <div class="filter-label">
       Events of route:
@@ -60,19 +61,20 @@
 <ul class="block-list js-route-list">
   {{#each itemController='trip'}}
     {{#view view.routeItemView}}
-    <a href="#" class="selectable-list-item js-list-focus" data-dismiss="dropdown">{{from_dt}}-{{to_dt}} <sup><small>{{ violations.length }}</small></sup></a>
-    {{#each viol in violations}}
-    <p>{{viol.title}}</p>
-    {{/each}}
+    {{#link-to 'trip.violations' this classNames='selectable-list-item js-list-focus'}}
+        {{from_dt}}-{{to_dt}} <sup><small>{{ numOfViolations }}</small></sup>
+    {{/link-to}}
     {{/view}}
+  {{else}}
+  Sorry
   {{/each}}
 </ul>
 </script>
-<script type="text/x-handlebars" data-template-name="trips/index">
+
+<script type="text/x-handlebars" data-template-name="trips_by_date/index">
 <section class="pane pane--beta">
   {{view MobiliuzTrips.TripPickerView}}
 </section>
-
 </script>
 <script src="js/libs/jquery-1.10.2.min.js"></script>
 <script src="js/libs/moment-with-langs.min.js"></script>
