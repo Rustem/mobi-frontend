@@ -127,5 +127,52 @@ this case, the default model will be `App.Post.find(params.post_id)`.
 @param {String} name the name of the template to render
 @param {Object} options the options
 
+### Connecting view to outlet
+
+var MyView = Ember.View.extend({
+  template: Ember.Handlebars.compile('Child view: {{outlet "main"}} ')
+});
+var myView = MyView.create();
+myView.appendTo('body');
+// The html for myView now looks like:
+// <div id="ember228" class="ember-view">Child view: </div>
+
+var FooView = Ember.View.extend({
+  template: Ember.Handlebars.compile('<h1>Foo</h1> ')
+});
+var fooView = FooView.create();
+myView.connectOutlet('main', fooView);
 
 
+
+### Application state reuse
+
+App.Router.map(function() {
+  this.resource('topCharts', function() {
+    this.route('choose', { path: '/' });
+    this.route('albums');
+    this.route('songs');
+    this.route('artists');
+    this.route('playlists');
+  });
+});
+
+App.TopChartsChooseRoute = Ember.Route.extend({
+  beforeModel: function() {
+    var lastFilter = this.controllerFor('application').get('lastFilter');
+    this.transitionTo('topCharts.' + (lastFilter || 'songs'));
+  }
+});
+
+// Superclass to be used by all of the filter routes below
+App.FilterRoute = Ember.Route.extend({
+  activate: function() {
+    var controller = this.controllerFor('application');
+    controller.set('lastFilter', this.templateName);
+  }
+});
+
+App.TopChartsSongsRoute = App.FilterRoute.extend();
+App.TopChartsAlbumsRoute = App.FilterRoute.extend();
+App.TopChartsArtistsRoute = App.FilterRoute.extend();
+App.TopChartsPlaylistsRoute = App.FilterRoute.extend();

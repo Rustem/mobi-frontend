@@ -15,6 +15,11 @@ MobiliuzTrips.FixtureAdapter = DS.FixtureAdapter.extend({
     });
   }
 });
+MobiliuzTrips.S = Ember.Object.create({
+    currentTrip: null,
+    date: new Date(),
+});
+
 
 MobiliuzTrips.Store = DS.Store.extend({
     adapter: 'Fixture'
@@ -24,3 +29,4 @@ MobiliuzTrips.Store = DS.Store.extend({
 
 window.GLB_EVTS = Ember.Map.create()
 GLB_EVTS.set('DATE_CHANGED', 'mobiliuz.dateChanged');
+

@@ -50,20 +50,20 @@
       Events of route:
   </div>
   <div class="filter-value form-field-select">
-      {{MobiliuzTrips.DatePicker.date.dt}}
+      {{ MobiliuzTrips.S.currentTrip }}
   </div>
 </script>
 <script type="text/x-handlebars" data-template-name="trippicker-body">
-{{view MobiliuzTrips.DatePicker valueBinding="MobiliuzTrips.DatePicker.date.dt"}}
+{{view MobiliuzTrips.DatePicker valueBinding="MobiliuzTrips.S.date"}}
 {{view view.routesView}}
 </script>
 <script type="text/x-handlebars" data-template-name="trippicker-routes">
 <ul class="block-list js-route-list">
   {{#each itemController="trip"}}
     {{#view view.routeItemView}}
-    {{#link-to 'trip.violations' this classNames='selectable-list-item js-list-focus'}}
-        {{from_dt}}-{{to_dt}} <sup><small>{{ numOfViolations }}</small></sup>
-    {{/link-to}}
+    <a {{action "tripSelected" controller this on="click" target=view}} class="selectable-list-item js-list-focus" href="#/1">
+    {{from_dt}}-{{to_dt}} <sup><small>{{ numOfViolations }}</small></sup>
+    </a>
     {{/view}}
   {{else}}
   Sorry
@@ -71,10 +71,49 @@
 </ul>
 </script>
 
-<script type="text/x-handlebars" data-template-name="trips_by_date/index">
+<script type="text/x-handlebars" data-template-name="trips_by_date">
 <section class="pane pane--beta">
-  {{view MobiliuzTrips.TripPickerView}}
+  {{view MobiliuzTrips.TripPickerView valueBinding="MobiliuzTrips.S.currentTrip"}}
+  {{outlet}}
 </section>
+</script>
+
+<script type="text/x-handlebars" data-template-name="trips_by_date/index">
+{{outlet}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="trip">
+{{outlet}}
+</script>
+<script type="text/x-handlebars" data-template-name="trip/index">
+
+<section class="pane-body">
+    <ul class="block-list">
+
+        {{#each violations}}
+        <li>
+          <div class="notification notification--new media js-list-focus">
+            <figure class="media-figure">
+              <figure class="icon">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" viewBox="0 0 1000 1000">
+                  <use class="icon-speed-limit" xlink:href="#icon-speed-limit">
+                </svg>
+              </figure>
+            </figure>
+            <div class="media-description">
+              <p>
+                <strong>{{title}}</strong>
+              </p>
+              <p>
+                ({{description}})
+              </p>
+              <time class="timestamp">{{at}}</time>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+    </ul>
+  </section>
 </script>
 <script src="js/libs/jquery-1.10.2.min.js"></script>
 <script src="js/libs/moment-with-langs.min.js"></script>

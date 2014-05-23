@@ -39,10 +39,6 @@ MobiliuzTrips.DatePicker = Ember.TextField.extend({
 
 });
 
-MobiliuzTrips.DatePicker.date = Ember.Object.create({
-    dt: new Date()
-});
-
 MobiliuzTrips.TripPickerHeaderView = Ember.View.extend({
     templateName: 'trippicker-header',
     clickableClass: 'form-field-select'
@@ -66,6 +62,14 @@ MobiliuzTrips.TripPickerBodyView = Ember.View.extend({
                   .find('.li--focus').removeClass('li--focus');
                 $(self).addClass('li--focus');
             },
+
+            actions: {
+                tripSelected: function(controller, record) {
+                    MobiliuzTrips.S.set('currentTrip',
+                                        controller.get('dt_range'));
+                    controller.send('currentTrip', record.get('id'));
+                }
+            }
         })
     })
 });

@@ -1,47 +1,25 @@
 MobiliuzTrips.Router.map(function() {
     this.resource('trips_by_date', {path: '/'}, function() {
         this.resource('trip', {path: '/:trip_id'}, function() {
-            this.route('violations', {path: '/violations'})
+
         });
     });
 });
 
-// MobiliuzTrips.TripsRoute = Ember.Route.extend({
-//     model: function() {
-//         return this.store.find('trip');
-//     },
-//     setupController: function(controller, model) {
-//         this._super(controller, model);
-//         this.controllerFor('trips').set('content', []);
-//         var self = this;
-//         Ember.Instrumentation.subscribe(GLB_EVTS.get('DATE_CHANGED'), {
-//             before: function (name, timestamp, payload) {
-//                 self.transitionTo('by_date', payload);
-//             },
-//             after: function () { }
-//         });
-//     },
-// });
 MobiliuzTrips.TripsByDateRoute = Ember.Route.extend({
+    currentRoute: 'heii',
+
     model: function(params) {
         //date = new Date(params.date);
+        dt = new Date(params.date)
         var self = this;
-        dt = new Date(params.date);
-        this.set('dt', dt);
         return this.store.filter('trip', {}, function(trip){
             var from_dt = trip.get('from_dt'),
                 to_dt = trip.get('to_dt');
-            return self._compare_dates(dt, from_dt) && self._compare_dates(dt, to_dt);
+            return self._compare_dates(dt, from_dt) &&
+                self._compare_dates(dt, to_dt);
         });
     },
-    _compare_dates: function(dt1, dt2) {
-        return (dt1.getDate() >= dt2.getDate()
-            && dt1.getMonth() == dt2.getMonth()
-            && dt1.getFullYear() == dt2.getFullYear())
-    },
-    // setupController: function(c, m) {
-    //     c.set('content', m);
-    // },
     _compare_dates: function(dt1, dt2) {
         return (dt1.getDate() >= dt2.getDate()
             && dt1.getMonth() == dt2.getMonth()
@@ -54,26 +32,48 @@ MobiliuzTrips.TripsByDateRoute = Ember.Route.extend({
     },
     actions: {
         dateChanged: function(dt) {
-            // this.model({'date': dt});p;
-            this.get('controller').set('date', dt);
+            // MobiliuzTrips.S.set('date', new Date(dt));
             this.model({'date': dt});
-            // this.set('date', dt);
+            this.replaceWith('trips_by_date.index');
         },
     },
+
+    redirect: function() {
+        console.log('hi');
+        this.transitionTo('trip.index', 1);
+    }
 });
 
 MobiliuzTrips.TripsByDateIndexRoute = Ember.Route.extend({
     model: function() {
         return this.modelFor('trips_by_date');
     },
-    // setupController: function(c, m) {
-    //     this._super(this.controllerFor('trips_by_date'), m);
-    // },
+    setupController: function(c, m) {
+        c.set('content', m);
+    }
+});
+
+MobiliuzTrips.TripRoute = Ember.Route.extend({
+    model: function(params, transition) {
+        return this.store.find('trip', params.trip_id);
+    }
+});
+
+MobiliuzTrips.TripIndexRoute = Ember.Route.extend({
+    model: function(m) {
+        return this.modelFor('trip');
+    },
+    setupController: function(c, m) {
+        c.set('content', m);
+        dt_range = this.controllerFor('trip').get('dt_range');
+        MobiliuzTrips.S.set('currentTrip', dt_range);
+    }
+
 });
 
 MobiliuzTrips.TripViolationsRoute = Ember.Route.extend({
-    model: function(params) {
-        alert('here')
-        console.log(params);
-    }
+    needs: 'trip',
+    // setupController: function() {
+    //     this._super(arguments)
+    // }
 });

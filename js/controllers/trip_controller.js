@@ -1,5 +1,11 @@
 MobiliuzTrips.TripController = Ember.ObjectController.extend({
     format: 'HH-mm',
+    tripPickerHeader: 'Hello world',
+    needs: 'trips_by_date',
+
+    trips: function() {
+        return this.get('controllers.trips_by_date').get('model');
+    }.property('controllers.trips_by_date'),
 
     from_dt: function(key, value) {
         var model = this.get('model');
@@ -34,4 +40,8 @@ MobiliuzTrips.TripController = Ember.ObjectController.extend({
         //     this.
         // }
     }
-})
+});
+
+MobiliuzTrips.TripIndexController = Ember.ObjectController.extend({
+    tripPickerHeader: 'hihi'
+});
