@@ -147,6 +147,7 @@ myView.connectOutlet('main', fooView);
 
 ### Application state reuse
 
+```javascript
 App.Router.map(function() {
   this.resource('topCharts', function() {
     this.route('choose', { path: '/' });
@@ -176,7 +177,7 @@ App.TopChartsSongsRoute = App.FilterRoute.extend();
 App.TopChartsAlbumsRoute = App.FilterRoute.extend();
 App.TopChartsArtistsRoute = App.FilterRoute.extend();
 App.TopChartsPlaylistsRoute = App.FilterRoute.extend();
-
+```
 
 NICE TO READ
 ------------
