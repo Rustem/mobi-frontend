@@ -176,3 +176,14 @@ App.TopChartsSongsRoute = App.FilterRoute.extend();
 App.TopChartsAlbumsRoute = App.FilterRoute.extend();
 App.TopChartsArtistsRoute = App.FilterRoute.extend();
 App.TopChartsPlaylistsRoute = App.FilterRoute.extend();
+
+
+NICE TO READ
+------------
+------------
+
+#. http://discuss.emberjs.com/t/some-ideas-i-had-about-composable-reusable-components/2850/17
+#. http://www.cerebris.com/blog/2012/03/06/understanding-ember-object/
+#. http://emberjs.com/guides/object-model/classes-and-instances/
+#. http://emberjs.com/guides/object-model/bindings/
+#. http://www.reddit.com/r/programming/comments/1ggvdm/angularjs_vs_ember_its_not_even_close/
